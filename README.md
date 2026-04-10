@@ -1,5 +1,5 @@
 # service_booking_system
-
+Added some text in branch menu
 #  Hair Salon Booking App
 
 A full-stack web application for booking hair salon appointments — built with modern technologies and real-world architecture.
