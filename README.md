@@ -30,7 +30,7 @@ Users can browse services, choose a stylist, pick available time slots and pay o
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 * **Frontend:** Next.js (App Router), React, Tailwind CSS
 * **Backend:** Next.js API routes
@@ -44,7 +44,7 @@ Users can browse services, choose a stylist, pick available time slots and pay o
 
 ---
 
-## 🧠 Architecture
+## Architecture
 
 This project follows a clean and scalable structure:
 
@@ -66,7 +66,7 @@ Everything sensitive runs server-side only.
 
 ---
 
-## 🔐 Authentication
+## Authentication
 
 * Email & password (bcrypt hashed)
 * Google OAuth login
@@ -75,20 +75,20 @@ Everything sensitive runs server-side only.
 
 ---
 
-## 📅 Booking Flow
+## Booking Flow
 
 1. Choose **service** or **staff**
 2. Select stylist
 3. Pick available date & time
 4. Review booking
 5. Pay with Stripe
-6. Get confirmation 🎉
+6. Get confirmation 
 
 If a slot becomes unavailable → user gets **alternative staff suggestions**
 
 ---
 
-## 💳 Payments
+## Payments
 
 * Stripe PaymentIntent
 * Secure checkout (no card data stored)
@@ -97,7 +97,7 @@ If a slot becomes unavailable → user gets **alternative staff suggestions**
 
 ---
 
-## 🗄 Database
+## Database
 
 Built with Prisma + PostgreSQL.
 
@@ -118,7 +118,7 @@ Relations ensure:
 
 ---
 
-## 🔒 Security
+## Security
 
 * Server-side session validation
 * Admin route protection
@@ -130,7 +130,7 @@ Relations ensure:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 app/
@@ -151,7 +151,7 @@ public/
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 Create `.env.local`:
 
@@ -173,7 +173,7 @@ UPSTASH_REDIS_REST_TOKEN=
 
 ---
 
-## 🎨 UX Principles
+## UX Principles
 
 This app follows key UX rules:
 
@@ -183,11 +183,9 @@ This app follows key UX rules:
 * Mobile-first responsive design
 * Accessibility support
 
-Good UX is critical — users leave quickly if the app is confusing or slow 
-
 ---
 
-## 🧩 Development Philosophy
+## Development Philosophy
 
 * TypeScript strict mode
 * Clean architecture
@@ -198,7 +196,7 @@ Good UX is critical — users leave quickly if the app is confusing or slow
 
 ---
 
-## 🧪 Future Improvements
+## Future Improvements
 
 * Notifications (SMS / push)
 * Loyalty system
@@ -208,7 +206,7 @@ Good UX is critical — users leave quickly if the app is confusing or slow
 
 ---
 
-## 📦 Getting Started
+## Getting Started
 
 ```bash
 git clone https://github.com/your-username/hair-salon-booking.git
@@ -222,13 +220,6 @@ npm run dev
 
 ---
 
-## 🙌 Author
+## Author
 
 Built as a full-stack project to practice real-world architecture, payments, and booking systems.
-
----
-
-If you want, I can:
-
-* make this **shorter (for uni submission)**
-* or turn it into a **perfect portfolio README (🔥 recruiters version)**
