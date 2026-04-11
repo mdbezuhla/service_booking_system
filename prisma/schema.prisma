@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  passwordHash String?
+  name         String
+  role         Role         @default(USER)
+  provider     AuthProvider @default(CREDENTIALS)
+  bookings     Booking[]
+  createdAt    DateTime     @default(now())
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  order    Int       @default(0)
+  services Service[]
+}
+
+model Service {
+  id          String         @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  duration    Int
+  imageUrl    String?
+  categoryId  String
+  category    Category       @relation(fields: [categoryId], references: [id])
+  staffLinks  StaffService[]
+  bookings    Booking[]
+}
+
+model Staff {
+  id       String         @id @default(cuid())
+  name     String
+  bio      String?
+  photoUrl String?
+  services StaffService[]
+  slots    TimeSlot[]
+  bookings Booking[]
+}
+
+model StaffService {
+  staffId   String
+  serviceId String
+  staff     Staff   @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([staffId, serviceId])
+}
+
+model TimeSlot {
+  id        String   @id @default(cuid())
+  staffId   String
+  staff     Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  startTime DateTime
+  endTime   DateTime
+  isBooked  Boolean  @default(false)
+  booking   Booking?
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  serviceId       String
+  service         Service       @relation(fields: [serviceId], references: [id])
+  staffId         String
+  staff           Staff         @relation(fields: [staffId], references: [id])
+  slotId          String        @unique
+  slot            TimeSlot      @relation(fields: [slotId], references: [id])
+  status          BookingStatus @default(PENDING)
+  stripePaymentId String?
+  totalPrice      Float
+  createdAt       DateTime      @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum AuthProvider {
+  CREDENTIALS
+  GOOGLE
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
