@@ -1,225 +1,253 @@
-# service_booking_system
-Added some text in branch menu
-#  Hair Salon Booking App
+# Hair Salon Booking System
 
-A full-stack web application for booking hair salon appointments — built with modern technologies and real-world architecture.
+Повноцінний веб-додаток для бронювання записів у перукарський салон, побудований на Next.js, TypeScript та PostgreSQL.
 
-Users can browse services, choose a stylist, pick available time slots and pay online. Admins get a powerful dashboard to manage everything.
+## Технології
+
+- **Фреймворк:** Next.js 15 (App Router)
+- **Мова:** TypeScript (strict mode)
+- **UI:** React + Tailwind CSS
+- **Автентифікація:** NextAuth.js v5 (логін/пароль + Google OAuth)
+- **База даних:** PostgreSQL з Prisma ORM
+- **Платежі:** Stripe (Payment Intents + Webhooks)
+- **Зберігання файлів:** Cloudinary (фото майстрів, зображення послуг)
+- **Деплой:** Vercel
+
+## Можливості
+
+- Перегляд послуг, згрупованих за категоріями
+- Профілі майстрів з переліком послуг, які вони надають
+- Покроковий візард бронювання (послуга → майстер → дата/час → перевірка → оплата)
+- Безпечна онлайн-оплата через Stripe
+- Особистий кабінет користувача для керування записами
+- Адмін-панель для керування майстрами, послугами, категоріями, бронюваннями та розкладом
+- Автентифікація через Google OAuth та електронну пошту/пароль
+- Адаптивний темний інтерфейс (mobile-first)
+
+## Початок роботи
+
+### Вимоги
+
+- Node.js 18+
+- База даних PostgreSQL
+- Акаунт Stripe (для оплати)
+- Облікові дані Google OAuth (для соціального входу)
+- Акаунт Cloudinary (для завантаження зображень)
+
+### Встановлення
+
+```bash
+git clone https://github.com/your-username/service_booking_system.git
+cd service_booking_system
+npm install
+```
+
+### Налаштування середовища
+
+Скопіюйте файл прикладу змінних середовища та заповніть значення:
+
+```bash
+cp .env.example .env.local
+```
+
+Необхідні змінні середовища:
+
+| Змінна | Опис |
+|---|---|
+| `DATABASE_URL` | Рядок підключення до PostgreSQL |
+| `NEXTAUTH_SECRET` | Випадковий секретний ключ для NextAuth.js |
+| `NEXTAUTH_URL` | URL додатку (http://localhost:3000 для розробки) |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
+| `STRIPE_SECRET_KEY` | Секретний ключ Stripe |
+| `STRIPE_PUBLISHABLE_KEY` | Публічний ключ Stripe |
+| `STRIPE_WEBHOOK_SECRET` | Ключ підпису вебхуків Stripe |
+| `CLOUDINARY_CLOUD_NAME` | Назва хмари Cloudinary |
+| `CLOUDINARY_API_KEY` | API ключ Cloudinary |
+| `CLOUDINARY_API_SECRET` | API секрет Cloudinary |
+
+### Налаштування бази даних
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+### Розробка
+
+```bash
+npm run dev
+```
+
+Відкрийте [http://localhost:3000](http://localhost:3000).
+
+### Stripe Webhooks (локальна розробка)
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+## Структура проєкту
+
+```
+├── app/                  # Сторінки Next.js App Router
+│   ├── (public)/         # Публічні сторінки (послуги, майстри, бронювання)
+│   ├── (auth)/           # Сторінки автентифікації (вхід, реєстрація)
+│   ├── (dashboard)/      # Особистий кабінет
+│   ├── (admin)/          # Адмін-панель
+│   └── api/              # API маршрути
+├── components/           # React компоненти
+│   ├── ui/               # Багаторазові UI компоненти
+│   ├── booking/          # Компоненти бронювання
+│   └── layout/           # Компоненти макету
+├── lib/                  # Основні бібліотеки
+│   ├── auth.ts           # Конфігурація NextAuth.js
+│   ├── prisma.ts         # Prisma клієнт (singleton)
+│   ├── stripe.ts         # Stripe клієнт
+│   └── validators/       # Схеми валідації Zod
+├── services/             # Шар бізнес-логіки (ООП)
+├── repositories/         # Шар доступу до даних
+├── types/                # Спільні TypeScript типи/DTO
+├── prisma/               # Prisma схема
+└── middleware.ts         # Middleware автентифікації
+```
+
+## Архітектура
+
+- **ООП Сервіси:** Бізнес-логіка інкапсульована у сервісних класах (`BookingService`, `StaffService` тощо)
+- **Патерн Repository:** Доступ до бази даних абстрагований через класи репозиторіїв
+- **DTO Маппінг:** Відповіді API маппляться на типізовані DTO перед передачею в UI
+- **Розділення Server/Client:** Server Components для отримання даних; Client Components для інтерактивності
+- **Zod Валідація:** Всі вхідні дані API валідуються на стороні сервера
+
+## Ліцензія
+
+MIT
 
 ---
 
-##  Features
+## 🇬🇧 English
 
-###  For Users
-
-* Browse services by category
-* View staff profiles and availability
-* Book appointments with a step-by-step wizard
-* Secure online payments (Stripe)
-* Personal dashboard with bookings history
-* Email confirmations after booking
-
-###  For Admins
-
-* Manage staff (create/edit/delete)
-* Assign services to staff
-* Manage services & categories
-* Generate and control time slots
-* View and filter all bookings
-* Cancel bookings with refund support
-
----
+A full-stack web application for booking hair salon appointments built with Next.js, TypeScript, and PostgreSQL.
 
 ## Tech Stack
 
-* **Frontend:** Next.js (App Router), React, Tailwind CSS
-* **Backend:** Next.js API routes
-* **Language:** TypeScript
-* **Auth:** NextAuth.js (Credentials + Google OAuth)
-* **Database:** PostgreSQL
-* **ORM:** Prisma
-* **Payments:** Stripe (PaymentIntent + Webhooks)
-* **Storage:** Cloudinary
-* **Deployment:** Vercel
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript (strict mode)
+- **UI:** React + Tailwind CSS
+- **Auth:** NextAuth.js v5 (Credentials + Google OAuth)
+- **Database:** PostgreSQL with Prisma ORM
+- **Payments:** Stripe (Payment Intents + Webhooks)
+- **Storage:** Cloudinary (staff photos, service images)
+- **Deployment:** Vercel
 
----
+## Features
 
-## Architecture
+- Browse services grouped by category
+- View staff profiles and their offered services
+- Multi-step booking wizard (service → stylist → date/time → review → payment)
+- Secure online payments via Stripe
+- User dashboard for managing bookings
+- Admin panel for managing staff, services, categories, bookings, and schedules
+- Google OAuth and email/password authentication
+- Responsive, mobile-first dark theme UI
 
-This project follows a clean and scalable structure:
+## Getting Started
 
-* Monorepo inside a single Next.js app
-* Server Components for data fetching
-* Client Components for interactivity
-* OOP-style services (`BookingService`, `StaffService`, etc.)
-* Repository layer for database access
-* Strict separation of concerns (no business logic in UI)
+### Prerequisites
 
+- Node.js 18+
+- PostgreSQL database
+- Stripe account (for payments)
+- Google OAuth credentials (for social login)
+- Cloudinary account (for image uploads)
+
+### Installation
+
+```bash
+git clone https://github.com/your-username/service_booking_system.git
+cd service_booking_system
+npm install
 ```
-components → UI
-services   → business logic
-repositories → database
-lib        → configs/utilities
+
+### Environment Setup
+
+Copy the example environment file and fill in your values:
+
+```bash
+cp .env.example .env.local
 ```
 
-Everything sensitive runs server-side only.
+Required environment variables:
 
----
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `NEXTAUTH_SECRET` | Random secret for NextAuth.js |
+| `NEXTAUTH_URL` | App URL (http://localhost:3000 for dev) |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
 
-## Authentication
+### Database Setup
 
-* Email & password (bcrypt hashed)
-* Google OAuth login
-* JWT sessions via NextAuth
-* Role-based access (`USER`, `ADMIN`)
+```bash
+npx prisma generate
+npx prisma db push
+```
 
----
+### Development
 
-## Booking Flow
+```bash
+npm run dev
+```
 
-1. Choose **service** or **staff**
-2. Select stylist
-3. Pick available date & time
-4. Review booking
-5. Pay with Stripe
-6. Get confirmation 
+Open [http://localhost:3000](http://localhost:3000).
 
-If a slot becomes unavailable → user gets **alternative staff suggestions**
+### Stripe Webhooks (Local Development)
 
----
-
-## Payments
-
-* Stripe PaymentIntent
-* Secure checkout (no card data stored)
-* Webhooks confirm booking
-* Slot is marked as booked only after successful payment
-
----
-
-## Database
-
-Built with Prisma + PostgreSQL.
-
-Main entities:
-
-* `User`
-* `Service`
-* `Staff`
-* `TimeSlot`
-* `Booking`
-* `Category`
-
-Relations ensure:
-
-* No double booking
-* Staff ↔ Services mapping
-* Slot-level control
-
----
-
-## Security
-
-* Server-side session validation
-* Admin route protection
-* Zod validation on all APIs
-* Stripe webhook verification
-* Password hashing (bcrypt)
-* Rate limiting (Upstash)
-* No secrets exposed to client
-
----
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
 
 ## Project Structure
 
 ```
-app/
-  (public)/
-  (auth)/
-  (dashboard)/
-  (admin)/
-  api/
-
-components/
-services/
-repositories/
-lib/
-types/
-prisma/
-public/
+├── app/                  # Next.js App Router pages
+│   ├── (public)/         # Public pages (services, staff, booking)
+│   ├── (auth)/           # Auth pages (sign-in, sign-up)
+│   ├── (dashboard)/      # User dashboard
+│   ├── (admin)/          # Admin panel
+│   └── api/              # API routes
+├── components/           # React components
+│   ├── ui/               # Reusable UI components
+│   ├── booking/          # Booking-specific components
+│   └── layout/           # Layout components
+├── lib/                  # Core libraries
+│   ├── auth.ts           # NextAuth.js configuration
+│   ├── prisma.ts         # Prisma client singleton
+│   ├── stripe.ts         # Stripe client
+│   └── validators/       # Zod validation schemas
+├── services/             # Business logic layer (OOP)
+├── repositories/         # Data access layer
+├── types/                # Shared TypeScript types/DTOs
+├── prisma/               # Prisma schema
+└── middleware.ts         # Auth middleware
 ```
 
----
+## Architecture
 
-## Environment Variables
+- **OOP Services:** Business logic encapsulated in service classes (`BookingService`, `StaffService`, etc.)
+- **Repository Pattern:** Database access abstracted through repository classes
+- **DTO Mapping:** API responses mapped to typed DTOs before reaching UI
+- **Server/Client Split:** Server Components for data fetching; Client Components for interactivity
+- **Zod Validation:** All API inputs validated server-side
 
-Create `.env.local`:
+## License
 
-```env
-DATABASE_URL=
-NEXTAUTH_SECRET=
-NEXTAUTH_URL=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-STRIPE_SECRET_KEY=
-STRIPE_PUBLISHABLE_KEY=
-STRIPE_WEBHOOK_SECRET=
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-UPSTASH_REDIS_REST_URL=
-UPSTASH_REDIS_REST_TOKEN=
-```
-
----
-
-## UX Principles
-
-This app follows key UX rules:
-
-* Simple and clear booking flow
-* Only available slots shown (no confusion)
-* Fast navigation and minimal clicks
-* Mobile-first responsive design
-* Accessibility support
-
----
-
-## Development Philosophy
-
-* TypeScript strict mode
-* Clean architecture
-* DRY (no duplicated logic)
-* Self-documenting code (no unnecessary comments)
-* Reusable components
-* Scalable structure
-
----
-
-## Future Improvements
-
-* Notifications (SMS / push)
-* Loyalty system
-* Reviews & ratings
-* Multi-location salons
-* Calendar sync (Google Calendar)
-
----
-
-## Getting Started
-
-```bash
-git clone https://github.com/your-username/hair-salon-booking.git
-
-cd hair-salon-booking
-
-npm install
-
-npm run dev
-```
-
----
-
-## Author
-
-Built as a full-stack project to practice real-world architecture, payments, and booking systems.
+MIT
